@@ -109,10 +109,11 @@ public class Heimdall {
 
         var parameters = grant.parameters
         if let credentials = credentials {
+            for (key, value) in credentials.parameters {
+                parameters.updateValue(value, forKey: key)
+            }
             if let secret = credentials.secret {
                 request.setHTTPAuthorization(.BasicAuthentication(username: credentials.id, password: secret))
-            } else {
-                parameters["client_id"] = credentials.id
             }
         }
 
